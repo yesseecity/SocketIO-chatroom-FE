@@ -2,12 +2,14 @@
   min-width: 300px;
   min-height: 300px;
   width: 600px;
-  border: 1px solid black;
+  // border: 1px solid black;
   margin: 0 auto;
   padding: 5px;
 
   .message-log {
     overflow-y: scroll;
+    max-height: 500px;
+    min-height: 260px;
   }
   .send-box {
     padding: 10px 10px 10px 20px;
@@ -16,8 +18,8 @@
       width: 90%;
     }
   }
-  div {
+  >div {
     border: 1px solid gray;
-    box-shadow: 2px 2px 2px 2px gray;
+    box-shadow: 0px 1px 4px 1px gray;
   }
 }

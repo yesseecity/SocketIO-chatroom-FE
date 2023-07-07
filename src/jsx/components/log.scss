@@ -1,0 +1,27 @@
+.log {
+  margin-top:10px;
+  margin-bottom: 10px;
+  padding: 0 10px;
+  .msg-box {
+    display: inline-grid;
+    position: relative;
+    &.self-msg {
+      text-align: right;
+    }
+    .username {
+      position: relative;
+      display: inline-block;
+      padding: 5px;
+      font-size: 25px;
+      font-weight: bold;
+    }
+    .message {
+      position: relative;
+      display: inline-block;
+      background-color: lightgreen;
+      padding: 5px;
+      border-radius: 5px;
+      text-align: left;
+    }
+  }
+}

@@ -45,10 +45,13 @@ module.exports = {
       directory: path.join(__dirname, './dist'),
     },
     historyApiFallback: true,
-    open: true,
+    open: false,
     port: 8000,
     // proxy: {
-    //   '/api': 'http://localhost:8080',
+    //   '/socket.io/*': {
+    //     target: 'http://localhost:8080',
+    //     ws: true
+    //   }
     // },
   },
   plugins: [ 
