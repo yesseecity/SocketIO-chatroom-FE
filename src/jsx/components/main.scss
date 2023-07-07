@@ -1,0 +1,23 @@
+.wrapper.main {
+  min-width: 300px;
+  min-height: 300px;
+  width: 600px;
+  border: 1px solid black;
+  margin: 0 auto;
+  padding: 5px;
+
+  .message-log {
+    overflow-y: scroll;
+  }
+  .send-box {
+    padding: 10px 10px 10px 20px;
+    textarea {
+      resize: none;
+      width: 90%;
+    }
+  }
+  div {
+    border: 1px solid gray;
+    box-shadow: 2px 2px 2px 2px gray;
+  }
+}
