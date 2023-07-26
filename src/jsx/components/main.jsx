@@ -1,4 +1,4 @@
-import React,{ useEffect, useRef, useState } from 'react';
+import React,{ useCallback, useEffect, useRef, useState } from 'react';
 import { io } from 'socket.io-client'
 import { Log } from './log.jsx'
 import './main.scss';
@@ -8,16 +8,23 @@ export function Main() {
   const [socket, setSocket] = useState();
   const [logs, setLogs] = useState([]);
   const messageLogDom = useRef();
+  const fromRef = useRef();
+  const textareaRef = useRef();
 
-  useEffect(()=>{
+  const createConnection = useCallback(() => {
     let socketConnection = io('/');
 
     let msgObj = {
       roomId: "room_001",
     }
     socketConnection.emit('joinRoom', JSON.stringify(msgObj));
+
     setSocket(socketConnection);
-  },[]);
+  }, []);
+
+  useEffect(()=>{
+    createConnection();
+  },[createConnection]);
 
   useEffect(()=>{
     messageLogDom.current.scrollTo({
@@ -31,7 +38,6 @@ export function Main() {
     if (socket == undefined) return; 
     socket.on('new message', (msg) => {
       let msgObj = JSON.parse(msg);
-      // if (msgObj.sender == socket.id) return;
       setLogs(logs => [...logs, msgObj])
     });
   },[socket]);
@@ -40,19 +46,15 @@ export function Main() {
   const submitMessage = (event) => {
     let data = null;
     event.preventDefault();
-    event.stopPropagation();
-    // console.log('submit message')
-    // console.log(event)
-    // One line if
-    if (event.type == 'keydown') {
-      data = new FormData(event.target.form);
-      event.target.value = '';
-    }
-
-    if (event.type === 'submit') {
-      data = new FormData(event.target);
-    }
-
+    event.stopPropagation();``
+    textareaRef.current.value='';
+    
+    // console.log('textarea: ',  textareaRef.current);
+    // console.log('form: ',  fromRef.current);
+    data = new FormData(fromRef.current);
+    textareaRef.current.value='';
+    // console.log(data);
+    // return;
     const dataObj = Object.fromEntries(data.entries());
     let msgObj = {
       ...dataObj,
@@ -66,9 +68,11 @@ export function Main() {
     socket.emit('new message', JSON.stringify(msgObj));
   };
   const keyboardCheck = (event) => {
-    if (event.shiftKey && event.key == "Enter") {
+
+    if (event.shiftKey==true && event.key == "Enter") {
       submitMessage(event);
     }
+
   };
   return (
     <div className="wrapper main">
@@ -79,10 +83,10 @@ export function Main() {
 
       <div className="send-box">
         send-box
-        <form onSubmit={submitMessage}>
+        <form onSubmit={submitMessage} ref={fromRef}>
           <label>User name:</label>
           <input name="username" type='text' placeholder='user name'></input>
-          <textarea name="message" onKeyDown={keyboardCheck} placeholder='Shift+Enter to send'>
+          <textarea name="message" ref={textareaRef} autoFocus id="textarea" onKeyDown={keyboardCheck} placeholder='Shift+Enter to send'>
           </textarea>
           <button type="submit">Send</button>
         </form>

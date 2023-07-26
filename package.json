@@ -4,7 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build": "webpack -p",
+    "build": "webpack ",
     "dev": "webpack-dev-server"
   },
   "repository": "https://github.com/yesseecity/simple-react-project.git",
