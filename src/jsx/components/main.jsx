@@ -24,6 +24,13 @@ export function Main() {
 
   useEffect(()=>{
     createConnection();
+
+    return () => {
+      // This return function is cleanup function.
+      // Refrence: https://react.dev/learn/synchronizing-with-effects#how-to-handle-the-effect-firing-twice-in-development
+      socket.disconnect();
+      setSocket(undefined);
+    };
   },[createConnection]);
 
   useEffect(()=>{
